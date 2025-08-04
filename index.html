@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Joke Generator</title>
+  <link rel="stylesheet" href="style.css" />
+<style
+body {
+  margin: 0;
+  padding: 0;
+  background-color: crimson;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: white;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+}
+
+button {
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  margin-top: 15px;
+  background-color: #fff;
+  color: crimson;
+font-weight: bold;
+  cursor: pointer;
+}
+
+.joke {
+  margin-top: 15px;
+  font-size: 18px;
+}
+
+
+
+
+</style>
+</head>
+<body>
+  <div class="container">
+    <h2>Joke Generator</h2>
+    <p>Click if you want Cringe Jokes</p>
+    <div class="joke"></div>
+    <button id="btn">Generate</button>
+  </div>
+
+  <!-- Axios CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="script.js">
+
+document.querySelector('#btn').addEventListener('click', getJoke);
+
+function getJoke() {
+  axios.get('https://anime-facts-rest-api.herokuapp.com/api/v1', {
+    headers: { Accept: 'text/plain' }
+  })
+  .then(response => {
+    const joke = response.data;
+    const jokeContainer = document.querySelector('.joke');
+    jokeContainer.innerHTML = `<blockquote>${joke}</blockquote>`;
+  })
+  .catch(error => {
+    const jokeContainer = document.querySelector('.joke');
+    jokeContainer.innerText = "Joke not found 😢";
+    console.error("Error fetching joke:", error);
+  });
+}
+
+
+
+
+</script>
+</body>
+</html>
